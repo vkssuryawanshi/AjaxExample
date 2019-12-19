@@ -1,0 +1,53 @@
+<html>
+<head>
+<script>
+	var request;
+	function sendInfo() {
+		var v = document.vinform.t1.value;
+		var url = "printTable.jsp?val=" + v; // create the url
+
+		if (window.XMLHttpRequest) // check type of browser..
+		{
+			request = new XMLHttpRequest(); // create the Object of XMLHttpRequest() 
+		} 
+		else if (window.ActiveXObject) // IE
+		{
+			request = new ActiveXObject("Microsoft.XMLHTTP"); // Create Object of XMLHttpRequest() as ActiveXObject for 
+															  // Internet Explorer browser
+		}
+
+		try 
+		{
+			request.onreadystatechange = getInfo; //execute fuction after completion of request.
+			request.open("GET", url, true);
+			request.send();
+		} 
+		catch (e) 
+		{
+			alert("Unable to connect to server. Please check the connection...");
+		}
+	}
+
+	function getInfo() 
+	{
+		if (request.readyState == 4)
+		{
+			var val = request.responseText;
+			document.getElementById('output').innerHTML = val;
+		}
+	}
+</script>
+</head>
+<body>
+	<marquee>
+		<h1>This is an example of ajax</h1>
+	</marquee>
+	<form name="vinform">
+		<input type="text" name="t1"> <input type="button"
+			value="ShowTable" onClick="sendInfo()">
+	</form>
+
+	<span id="output"> </span>
+
+</body>
+</html>
